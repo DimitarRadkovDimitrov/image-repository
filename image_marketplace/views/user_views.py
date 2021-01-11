@@ -24,8 +24,8 @@ def get_all_users():
     for user in all_users:
         user_object = {
             'username': user.username,
-            'first name': user.first_name,
-            'last name': user.last_name,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
             'email': user.email
         }
         response['users'].append(user_object)
@@ -38,8 +38,8 @@ def create_user(request):
         response = {}
         
         request_body = json.loads(request.body)
-        first_name = request_body['first name']
-        last_name = request_body['last name']
+        first_name = request_body['first_name']
+        last_name = request_body['last_name']
         username = request_body['username']
         password = request_body['password']
 
@@ -52,12 +52,14 @@ def create_user(request):
         user.save()
 
         response['username'] = user.username
-        response['first name'] = user.first_name
-        response['last name'] = user.last_name
+        response['first_name'] = user.first_name
+        response['last_name'] = user.last_name
         response['email'] = user.email
 
         return JsonResponse(data=response, status=HTTPStatus.OK)
+
     except KeyError as e:
         return JsonResponse(data={'error': 'Invalid request payload'}, status=HTTPStatus.BAD_REQUEST)
+
     except IntegrityError as e:
         return JsonResponse(data={'error': 'User already exists.'}, status=HTTPStatus.CONFLICT)

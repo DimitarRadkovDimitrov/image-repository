@@ -3,5 +3,6 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('users/', user_views.users)
+    path('users/', user_views.users),
+    path('images/', image_views.images)
 ]
