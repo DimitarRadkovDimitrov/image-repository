@@ -13,23 +13,22 @@ from http import HTTPStatus
 @csrf_exempt
 def images(request):
     if request.method == 'POST':
-        return upload_image(request)
+        return upload_images(request)
     elif request.method == 'DELETE':
         return delete_image(request)
 
 
-def upload_image(request):
+def upload_images(request):
     response = {}
     request_body = json.loads(request.body)
-
-    image_file_path = request_body['image_file_path']
-    image_metadata = request_body['metadata']
-    
     fire_storage = FireStorage()
 
     try:
-        created_id = fire_storage.upload_file(image_file_path, image_metadata)
-        response['id'] = created_id
+        if "images" in request_body:
+            response['images'] = fire_storage.upload_files(request_body['images'])
+        else:
+            response['id'] = fire_storage.upload_file(request_body)
+
         return JsonResponse(data=response, status=HTTPStatus.OK)
 
     except Exception as e:
