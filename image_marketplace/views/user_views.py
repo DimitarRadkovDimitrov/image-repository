@@ -13,6 +13,7 @@ from http import HTTPStatus
 def users(request):
     if request.method == 'GET':
         return get_all_users()
+
     elif request.method == 'POST':
         return create_user(request)
 
@@ -52,11 +53,11 @@ def create_user(request):
         response = model_to_dict(user)
         return JsonResponse(data=response, status=HTTPStatus.OK)
 
-    except KeyError as e:
-        return JsonResponse(data={'error': 'Invalid request payload'}, status=HTTPStatus.BAD_REQUEST)
-
     except IntegrityError as e:
         return JsonResponse(data={'error': 'User already exists.'}, status=HTTPStatus.CONFLICT)
+    
+    except:
+        return JsonResponse(data={'error': 'Invalid request payload'}, status=HTTPStatus.BAD_REQUEST)
 
 
 def user_login(request):
@@ -75,7 +76,7 @@ def user_login(request):
             else:
                 return JsonResponse(data={'error': 'Username or password incorrect.'}, status=HTTPStatus.NOT_ACCEPTABLE)
     
-        except KeyError as e:
+        except:
             return JsonResponse(data={'error': 'Invalid request payload.'}, status=HTTPStatus.BAD_REQUEST)
     else:
         return JsonResponse(data={'error': 'Method not allowed.'}, status=HTTPStatus.METHOD_NOT_ALLOWED)
