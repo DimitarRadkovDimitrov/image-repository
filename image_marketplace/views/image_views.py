@@ -20,7 +20,7 @@ def images(request):
         elif request.method == 'DELETE':
             return delete_images(request)
     else:
-        return JsonResponse(data={'error': 'User is not authenticated.'}, status=HTTPStatus.NOT_ACCEPTABLE)
+        return JsonResponse(data={'error': 'User is not authenticated.'}, status=HTTPStatus.UNAUTHORIZED)
 
 
 def get_images(request):
@@ -64,15 +64,41 @@ def delete_images(request):
     response = {}
 
     try:
+        current_user = request.user
         request_body = json.loads(request.body)
         fire_storage = FireStorage()
 
         if "images" in request_body:
-            fire_storage.delete_files(request_body['images'])
+            for i in range(len(request_body['images'])):
+                to_delete = models.Image.objects.get(pk=request_body['images'][i])
+
+                if not _is_valid_deletion(current_user, to_delete):
+                    return JsonResponse(
+                        data={'error': 'User does not have access to this content.'},
+                        status=HTTPStatus.FORBIDDEN
+                    )   
+
+                fire_storage.delete_file(to_delete.storage_id)
+                delete_image_data(to_delete)
         else:
-            fire_storage.delete_file(request_body['id'])
+            to_delete = models.Image.objects.get(pk=request_body['id'])
+            
+            if not _is_valid_deletion(current_user, to_delete):
+                return JsonResponse(
+                    data={'error': 'User does not have access to this content.'},
+                    status=HTTPStatus.FORBIDDEN
+                )
+
+            fire_storage.delete_file(to_delete.storage_id)
+            delete_image_data(to_delete)
 
         return JsonResponse(data={}, status=HTTPStatus.OK)
+
+    except ObjectDoesNotExist as e:
+        return JsonResponse(
+            data={'error': 'One or more of these images do not exist.'},
+            status=HTTPStatus.BAD_REQUEST
+        )
 
     except Exception as e:
         response['error'] = str(e)    
@@ -92,3 +118,14 @@ def store_image_data(user, image_record, storage_id):
 
     new_image.save()
     return new_image
+
+
+def delete_image_data(image):
+    image.delete()
+
+
+def _is_valid_deletion(user, image):
+    if image.user != user:
+        return False
+
+    return True

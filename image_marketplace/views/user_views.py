@@ -23,13 +23,7 @@ def get_all_users():
     all_users = User.objects.all()
 
     for user in all_users:
-        user_object = {
-            'username': user.username,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'email': user.email
-        }
-        response['users'].append(user_object)
+        response['users'].append(model_to_dict(user))
 
     return JsonResponse(data=response, status=HTTPStatus.OK)
 
@@ -84,7 +78,7 @@ def user_login(request):
 
 def user_logout(request):
     if not request.user.is_authenticated:
-        return JsonResponse(data={'error': 'User is not authenticated.'}, status=HTTPStatus.NOT_ACCEPTABLE)
+        return JsonResponse(data={'error': 'User is not authenticated.'}, status=HTTPStatus.UNAUTHORIZED)
     
     logout(request)
     return JsonResponse(data={'status': 'User successfully logged out.'}, status=HTTPStatus.OK)
