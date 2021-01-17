@@ -6,14 +6,16 @@ from django.core.exceptions import *
 from django.db import *
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from http import HTTPStatus
 
 
-@csrf_exempt
 def images(request):
+    if not request.user.is_authenticated:
+        return JsonResponse(data={'error': 'User is not authenticated.'}, status=HTTPStatus.NOT_ACCEPTABLE)
+ 
     if request.method == 'POST':
         return upload_images(request)
+        
     elif request.method == 'DELETE':
         return delete_image(request)
 
