@@ -17,7 +17,7 @@ def images(request):
         return upload_images(request)
         
     elif request.method == 'DELETE':
-        return delete_image(request)
+        return delete_images(request)
 
 
 def upload_images(request):
@@ -38,15 +38,17 @@ def upload_images(request):
         return JsonResponse(data=response, status=HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
-def delete_image(request):
+def delete_images(request):
     response = {}
     request_body = json.loads(request.body)
-
-    image_id = request_body['id']
     fire_storage = FireStorage()
 
     try:
-        fire_storage.delete_file(image_id)
+        if "images" in request_body:
+            fire_storage.delete_files(request_body['images'])
+        else:
+            fire_storage.delete_file(request_body['id'])
+
         return JsonResponse(data={}, status=HTTPStatus.OK)
 
     except Exception as e:

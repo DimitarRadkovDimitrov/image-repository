@@ -33,6 +33,15 @@ class FireStorage:
         except GoogleCloudError as e:
             raise e
 
+    
+    def delete_files(self, file_ids):
+        try:
+            for file_id in file_ids:
+                self.delete_file(file_id)
+
+        except GoogleCloudError as e:
+            raise e
+
 
     def upload_file(self, file_record):
         try:
