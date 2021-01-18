@@ -46,12 +46,9 @@ class FireStorage:
     def upload_file(self, file_record):
         try:
             filename = str(uuid.uuid4())
-            file_path = file_record[self.FILE_PATH_KEY]
-            file_metadata = file_record[self.METADATA_KEY]
-
             blob = self.bucket.blob(filename)
-            blob.metadata = file_metadata
-            blob.upload_from_filename(file_path)
+            blob.upload_from_string(file_record.read(), content_type='image/jpeg')
+
             return filename
 
         except GoogleCloudError as e:

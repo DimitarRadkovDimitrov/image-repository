@@ -35,23 +35,24 @@ def get_images(request):
 
 def upload_images(request):
     response = {}
-    
-    try:
-        current_user = request.user
-        request_body = json.loads(request.body)
-        fire_storage = FireStorage()
 
-        if "images" in request_body:
-            response['images'] = []
-            storage_ids = fire_storage.upload_files(request_body['images'])
-            
-            for i in range(len(request_body['images'])):
-                new_image = store_image_data(current_user, request_body['images'][i], storage_ids[i])
-                response['images'].append(model_to_dict(new_image))
-        else:
-            storage_id = fire_storage.upload_file(request_body)
-            new_image = store_image_data(current_user, request_body, storage_id)
-            response = model_to_dict(new_image)
+    try:
+        fire_storage = FireStorage()
+        current_user = request.user
+        image_files = request.FILES.getlist('images')
+        image_metadata_list = json.loads(request.POST['meta'])
+        response['images'] = []
+
+        if len(image_files) != len(image_metadata_list):
+            return JsonResponse(data={'error': 'Invalid request payload.'}, status=HTTPStatus.NOT_ACCEPTABLE)
+
+        for i in range(len(image_files)):
+            image_file = image_files[i].file
+            image_metadata = image_metadata_list[i]
+
+            storage_id = fire_storage.upload_file(image_file)
+            new_image = store_image_data(current_user, image_metadata, storage_id)
+            response['images'].append(model_to_dict(new_image))
 
         return JsonResponse(data=response, status=HTTPStatus.OK)
 
