@@ -60,3 +60,13 @@ To remove images from the repo users must first be authenticated.
     - To delete images from the repo, users must be authenticated in the platform.
 
     - Once they're authenticated, private information such as image ids are encrypted over the network.
+
+<br>
+
+## Usage
+
+### Set up environment
+- Google Cloud Storage Key
+    - Put service_account.json in root directory
+
+- 
