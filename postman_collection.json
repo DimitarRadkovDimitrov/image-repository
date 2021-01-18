@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "3e4a5a26-469c-4ef2-a24b-a56759a3e3ac",
+		"name": "Shopify Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Shopify\",\n    \"first_name\": \"Tobias\",\n    \"last_name\": \"Lütke\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/users/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login as User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Shopify\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/login/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout a User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/logout/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"logout",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/users/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a New Image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/Users/dimitar/Desktop/download.jpeg"
+						},
+						{
+							"key": "meta",
+							"value": "[\n    {\n        \"title\": \"Test Image 1\",\n        \"description\": \"\",\n        \"is_private\": false,\n        \"height\": 300,\n        \"width\": 500,\n        \"metadata\": {}\n    }\n]",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/images/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Multiple Images",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/Users/dimitar/Desktop/download.jpeg"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/Users/dimitar/Desktop/download.jpeg"
+						},
+						{
+							"key": "meta",
+							"value": "[\n    {\n        \"title\": \"Test Image 2\",\n        \"description\": \"\",\n        \"is_private\": true,\n        \"height\": 300,\n        \"width\": 500,\n        \"metadata\": {}\n    },\n    {\n        \"title\": \"Test Image 3\",\n        \"description\": \"\",\n        \"is_private\": false,\n        \"height\": 300,\n        \"width\": 500,\n        \"metadata\": {}\n    }\n]",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/images/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View all Public Images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/images/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/images/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Multiple Images",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"images\": [5, 6]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-shopify-image-repository.herokuapp.com/image-marketplace/images/",
+					"protocol": "https",
+					"host": [
+						"my-shopify-image-repository",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"image-marketplace",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

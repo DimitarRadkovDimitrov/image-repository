@@ -64,9 +64,34 @@ To remove images from the repo users must first be authenticated.
 <br>
 
 ## Usage
+- Go to [https://my-shopify-image-repository.herokuapp.com/image-marketplace](my-shopify-image-repository.herokuapp.com/image-marketplace).
 
-### Set up environment
-- Google Cloud Storage Key
-    - Put service_account.json in root directory
+- Import my [postman collection](./postman_collection.json).
 
-- 
+- Try some requests!
+
+<br>
+
+### Create a New User
+![Create User](./api_demo/create_user.png)
+
+### Login
+![Login](./api_demo/login.png)
+
+### Upload a New Image
+![Upload a New Image](./api_demo/create_image.png)
+
+### Upload Multiple New Images
+![Upload Multiple New Images](./api_demo/create_image_multiple.png)
+
+### View all Public Images
+![View all Images](./api_demo/view_public_images.png)
+
+### Delete an Image
+![Delete an Image](./api_demo/delete_image.png)
+
+### Delete Multiple Images
+![Delete an Image](./api_demo/delete_image_multiple.png)
+
+### Log a User Out
+![Logout](./api_demo/logout.png)
